@@ -4,7 +4,7 @@
 namespace Iot.Device.Si5351.Register
 {
     /// <summary>
-    /// Si5361 register interface
+    /// Si5351 register interface
     /// </summary>
     public interface IRegister
     {

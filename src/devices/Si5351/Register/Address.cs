@@ -48,5 +48,14 @@ namespace Iot.Device.Si5351.Register
         /// </summary>
         CLK7 = 23,
 
+        /// <summary>
+        /// CLK3-0 Disable State - register 24
+        /// </summary>
+        CLK30DISSTATE = 24,
+
+        /// <summary>
+        /// CLK7-4 Disable State - register 25
+        /// </summary>
+        CLK74DISSTATE = 25
     }
 }

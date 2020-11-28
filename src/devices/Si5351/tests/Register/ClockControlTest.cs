@@ -71,18 +71,32 @@ namespace Iot.Device.Si5351.Tests
         }
 
         [Theory]
-        [InlineData(0b0000_0000)]
-        [InlineData(0b0000_0001)]
-        [InlineData(0b0000_0010)]
-        [InlineData(0b0000_0100)]
-        [InlineData(0b0000_1000)]
-        [InlineData(0b0001_0000)]
-        [InlineData(0b0010_0000)]
-        [InlineData(0b0100_0000)]
-        [InlineData(0b1000_0000)]
-        public void ClockControl_ToByte(byte registerValue)
+        [InlineData(ClockControl.DriveStrength.Output2mA, ClockControl.InputSource.XTAL, ClockControl.Inversion.NotInverted, ClockControl.DividerSource.PLLA, ClockControl.IntegerMode.FractionalDivision, ClockControl.PowerState.PoweredUp, 0b0000_0000)]
+        [InlineData(ClockControl.DriveStrength.Output4mA, ClockControl.InputSource.XTAL, ClockControl.Inversion.NotInverted, ClockControl.DividerSource.PLLA, ClockControl.IntegerMode.FractionalDivision, ClockControl.PowerState.PoweredUp, 0b0000_0001)]
+        [InlineData(ClockControl.DriveStrength.Output6mA, ClockControl.InputSource.XTAL, ClockControl.Inversion.NotInverted, ClockControl.DividerSource.PLLA, ClockControl.IntegerMode.FractionalDivision, ClockControl.PowerState.PoweredUp, 0b0000_0010)]
+        [InlineData(ClockControl.DriveStrength.Output8mA, ClockControl.InputSource.XTAL, ClockControl.Inversion.NotInverted, ClockControl.DividerSource.PLLA, ClockControl.IntegerMode.FractionalDivision, ClockControl.PowerState.PoweredUp, 0b0000_0011)]
+        [InlineData(ClockControl.DriveStrength.Output2mA, ClockControl.InputSource.CLKIN, ClockControl.Inversion.NotInverted, ClockControl.DividerSource.PLLA, ClockControl.IntegerMode.FractionalDivision, ClockControl.PowerState.PoweredUp, 0b0000_0100)]
+        [InlineData(ClockControl.DriveStrength.Output2mA, ClockControl.InputSource.MultiSynth, ClockControl.Inversion.NotInverted, ClockControl.DividerSource.PLLA, ClockControl.IntegerMode.FractionalDivision, ClockControl.PowerState.PoweredUp, 0b0000_1100)]
+        [InlineData(ClockControl.DriveStrength.Output2mA, ClockControl.InputSource.XTAL, ClockControl.Inversion.Inverted, ClockControl.DividerSource.PLLA, ClockControl.IntegerMode.FractionalDivision, ClockControl.PowerState.PoweredUp, 0b0001_0000)]
+        [InlineData(ClockControl.DriveStrength.Output2mA, ClockControl.InputSource.XTAL, ClockControl.Inversion.NotInverted, ClockControl.DividerSource.PLLB_VCXO, ClockControl.IntegerMode.FractionalDivision, ClockControl.PowerState.PoweredUp, 0b0010_0000)]
+        [InlineData(ClockControl.DriveStrength.Output2mA, ClockControl.InputSource.XTAL, ClockControl.Inversion.NotInverted, ClockControl.DividerSource.PLLA, ClockControl.IntegerMode.Integer, ClockControl.PowerState.PoweredUp, 0b0100_0000)]
+        [InlineData(ClockControl.DriveStrength.Output2mA, ClockControl.InputSource.XTAL, ClockControl.Inversion.NotInverted, ClockControl.DividerSource.PLLA, ClockControl.IntegerMode.FractionalDivision, ClockControl.PowerState.PoweredDown, 0b1000_0000)]
+        public void ClockControl_InitializeFromSettings_CheckPropertiesAndRegisterValue(ClockControl.DriveStrength driveStrength,
+                                                                                        ClockControl.InputSource inputSource,
+                                                                                        ClockControl.Inversion inversion,
+                                                                                        ClockControl.DividerSource dividerSource,
+                                                                                        ClockControl.IntegerMode integerMode,
+                                                                                        ClockControl.PowerState powerState,
+                                                                                        byte registerValue)
         {
-            Assert.Equal(registerValue, new ClockControl(0, registerValue).ToByte());
+            var register = new ClockControl(0, driveStrength, inputSource, inversion, dividerSource, integerMode, powerState);
+            Assert.Equal(driveStrength, register.OutputDriveStrength);
+            Assert.Equal(inputSource, register.ClockInputSource);
+            Assert.Equal(inversion, register.OutputInversion);
+            Assert.Equal(dividerSource, register.MultiSynthDividerSource);
+            Assert.Equal(integerMode, register.MultiSynthIntegerMode);
+            Assert.Equal(powerState, register.OutputPowerState);
+            Assert.Equal(registerValue, register.ToByte());
         }
     }
 }

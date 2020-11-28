@@ -13,117 +13,6 @@ namespace Iot.Device.Si5351.Register
         private readonly int _clockNumber;
 
         /// <summary>
-        /// Defines the the set of clock output driver power states.
-        /// </summary>
-        public enum PowerState
-        {
-            /// <summary>
-            /// Clock output driver is powered up (default).
-            /// </summary>
-            PoweredUp,
-
-            /// <summary>
-            /// Clock output driver is power down to conserve power.
-            /// </summary>
-            PoweredDown
-        }
-
-        /// <summary>
-        /// Defines the set of MultiSynth (MS0-7) divider integer modes.
-        /// </summary>
-        public enum IntegerMode
-        {
-            /// <summary>
-            /// MultiSynth divider operates in fractional division mode (default).
-            /// </summary>
-            FractionalDivision,
-
-            /// <summary>
-            ///  MultiSynth divider operates in (forced) integer mode.
-            /// </summary>
-            Integer
-        }
-
-        /// <summary>
-        /// Defines the set of sources for the MultiSynth divider.
-        /// </summary>
-        public enum DividerSource
-        {
-            /// <summary>
-            /// PLL A is the source for the MultiSynth divider (default).
-            /// </summary>
-            PLLA,
-
-            /// <summary>
-            /// PLL B (Si5351A/C) or VCXO (Si5351B) is the source for the MultiSynth divider.
-            /// </summary>
-            PLLB_VCXO
-        }
-
-        /// <summary>
-        /// Defines the set of clock output inversion states.
-        /// </summary>
-        public enum Inversion
-        {
-            /// <summary>
-            /// Clock output is not inverted (default).
-            /// </summary>
-            NotInverted,
-
-            /// <summary>
-            /// Clock output is inverted.
-            /// </summary>
-            Inverted
-        }
-
-        /// <summary>
-        /// Defines the set of clock input sources for the clock output.
-        /// </summary>
-        public enum InputSource
-        {
-            /// <summary>
-            /// Connects the output to the XTAL input and bypasses synthesis stages (default).
-            /// </summary>
-            XTAL,
-
-            /// <summary>
-            /// Connects the output to the CLKIN pin and bypasses synthesis stages (Si5351C only).
-            /// </summary>
-            CLKIN,
-
-            /// <summary>
-            /// Connect the output to the MultiSynth divider (free-running or syncrhonous clock synthetization).
-            /// </summary>
-            MultiSynth
-        }
-
-        /// <summary>
-        /// Defines the set of output strength levels (which influences rise and fall time of clock slopes as well).
-        /// </summary>
-        public enum DriveStrength
-        {
-            /// <summary>
-            /// Output strength is 2 mA (default).
-            /// </summary>
-            Output2mA,
-
-            /// <summary>
-            /// Output strength is 4 mA.
-            /// </summary>
-            Output4mA,
-
-            /// <summary>
-            /// Output strength is 6 mA (for 85 Ohm termination).
-            /// </summary>
-            Output6mA,
-
-            /// <summary>
-            /// Output strength is 8 mA (for 50 Ohm termination).
-            /// </summary>
-            Output8mA
-        }
-
-        /// <summary>
         /// Strength level of the clock output.
         /// </summary>
         public DriveStrength OutputDriveStrength { get; init; }
@@ -155,6 +44,7 @@ namespace Iot.Device.Si5351.Register
 
         /// <summary>
         /// Initializes a new instance of a clock control register for the given clock number.
+        /// The settings in this register define the function of the clock output.
         /// </summary>
         /// <param name="clockNumber">Associated clock output (range: 0 to 7).</param>
         /// <param name="outputDriveStrength">CLKx_IDRV[1:0]: drive strength bits.</param>
@@ -275,5 +165,116 @@ namespace Iot.Device.Si5351.Register
             7 => Address.CLK7,
             _ => throw new Exception($"Invalid clock number: {_clockNumber}.")
         };
+
+        /// <summary>
+        /// Defines the the set of clock output driver power states.
+        /// </summary>
+        public enum PowerState
+        {
+            /// <summary>
+            /// Clock output driver is powered up (default).
+            /// </summary>
+            PoweredUp,
+
+            /// <summary>
+            /// Clock output driver is power down to conserve power.
+            /// </summary>
+            PoweredDown
+        }
+
+        /// <summary>
+        /// Defines the set of MultiSynth (MS0-7) divider integer modes.
+        /// </summary>
+        public enum IntegerMode
+        {
+            /// <summary>
+            /// MultiSynth divider operates in fractional division mode (default).
+            /// </summary>
+            FractionalDivision,
+
+            /// <summary>
+            ///  MultiSynth divider operates in (forced) integer mode.
+            /// </summary>
+            Integer
+        }
+
+        /// <summary>
+        /// Defines the set of sources for the MultiSynth divider.
+        /// </summary>
+        public enum DividerSource
+        {
+            /// <summary>
+            /// PLL A is the source for the MultiSynth divider (default).
+            /// </summary>
+            PLLA,
+
+            /// <summary>
+            /// PLL B (Si5351A/C) or VCXO (Si5351B) is the source for the MultiSynth divider.
+            /// </summary>
+            PLLB_VCXO
+        }
+
+        /// <summary>
+        /// Defines the set of clock output inversion states.
+        /// </summary>
+        public enum Inversion
+        {
+            /// <summary>
+            /// Clock output is not inverted (default).
+            /// </summary>
+            NotInverted,
+
+            /// <summary>
+            /// Clock output is inverted.
+            /// </summary>
+            Inverted
+        }
+
+        /// <summary>
+        /// Defines the set of clock input sources for the clock output.
+        /// </summary>
+        public enum InputSource
+        {
+            /// <summary>
+            /// Connects the output to the XTAL input and bypasses synthesis stages (default).
+            /// </summary>
+            XTAL,
+
+            /// <summary>
+            /// Connects the output to the CLKIN pin and bypasses synthesis stages (Si5351C only).
+            /// </summary>
+            CLKIN,
+
+            /// <summary>
+            /// Connect the output to the MultiSynth divider (free-running or syncrhonous clock synthetization).
+            /// </summary>
+            MultiSynth
+        }
+
+        /// <summary>
+        /// Defines the set of output strength levels (which influences rise and fall time of clock slopes as well).
+        /// </summary>
+        public enum DriveStrength
+        {
+            /// <summary>
+            /// Output strength is 2 mA (default).
+            /// </summary>
+            Output2mA,
+
+            /// <summary>
+            /// Output strength is 4 mA.
+            /// </summary>
+            Output4mA,
+
+            /// <summary>
+            /// Output strength is 6 mA (for 85 Ohm termination).
+            /// </summary>
+            Output6mA,
+
+            /// <summary>
+            /// Output strength is 8 mA (for 50 Ohm termination).
+            /// </summary>
+            Output8mA
+        }
     }
 }
