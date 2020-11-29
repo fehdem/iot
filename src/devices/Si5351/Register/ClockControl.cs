@@ -138,16 +138,16 @@ namespace Iot.Device.Si5351.Register
             };
 
             // CLKx[4] - CLKx_INV
-            registerValue |= OutputInversion == Inversion.NotInverted ? 0b0000_0000 : 0b0001_0000;
+            registerValue |= OutputInversion == Inversion.NotInverted ? 0 : 0b0001_0000;
 
             // CLKx[5] - MSx_SRC
-            registerValue |= MultiSynthDividerSource == DividerSource.PLLA ? 0b_0000_00000 : 0b0010_0000;
+            registerValue |= MultiSynthDividerSource == DividerSource.PLLA ? 0 : 0b0010_0000;
 
             // CLKx[6] - MSx_INT
-            registerValue |= MultiSynthIntegerMode == IntegerMode.FractionalDivision ? 0b0000_0000 : 0b0100_0000;
+            registerValue |= MultiSynthIntegerMode == IntegerMode.FractionalDivision ? 0 : 0b0100_0000;
 
             // CLKx[7] - CLKx_PDN
-            registerValue |= OutputPowerState == PowerState.PoweredUp ? 0b0000_0000 : 0b1000_0000;
+            registerValue |= OutputPowerState == PowerState.PoweredUp ? 0 : 0b1000_0000;
 
             return registerValue;
         }

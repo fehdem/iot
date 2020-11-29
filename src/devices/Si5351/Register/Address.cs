@@ -9,6 +9,16 @@ namespace Iot.Device.Si5351.Register
     public enum Address : byte
     {
         /// <summary>
+        /// Device Status- register 0
+        /// </summary>
+        DeviceStatus = 0,
+
+        /// <summary>
+        /// PLL Input Source - register 15
+        /// </summary>
+        PllInputSource = 15,
+
+        /// <summary>
         /// CLK0 Control - register 16
         /// </summary>
         CLK0 = 16,

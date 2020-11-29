@@ -16,7 +16,7 @@ namespace Iot.Device.Si5351.Tests
         [InlineData(6, (byte)Address.CLK6, true)]
         [InlineData(7, (byte)Address.CLK7, true)]
         [InlineData(8, 0, false)]
-        public void ClockControl_CheckIfRegisterAddressIsCorrectForGivenClockNumber(int clockNumber, byte registerAddress, bool isValid)
+        public void ClockControl_CheckAddresses(int clockNumber, byte registerAddress, bool isValid)
         {
             if (isValid)
             {
